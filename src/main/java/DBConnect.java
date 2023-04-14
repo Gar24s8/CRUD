@@ -8,13 +8,15 @@ public class DBConnect {
     private static String dbUsername = "sa";
     private static String dbPassword = "";
 
-    public static Connection getConnection() {
+    public static Connection getConnection(){
         Connection connection = null;
         try {
             connection = DriverManager.getConnection(dbURL, dbUsername, dbPassword);
+            connection.setAutoCommit(true);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         return connection;
     }
+
 }
