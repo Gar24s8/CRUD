@@ -4,15 +4,11 @@ public class Employee {
     private String position;
     private int salary;
     private int officeId;
+    private String officeName;
+    private String officeAddress;
 
-    public Employee(String name, String position, int salary, int officeId) {
-    this.name = name;
-    this.position = position;
-    this.salary = salary;
-    this.officeId = officeId;
-
+    public Employee(int id, String name, String position, int salary, int officeId) {
     }
-
 
 
     @Override
@@ -22,19 +18,22 @@ public class Employee {
                 ", name='" + name + '\'' +
                 ", position='" + position + '\'' +
                 ", salary=" + salary +
-                ", office_id=" + officeId +
+                ", officeName=" + officeName +
+                ", officeAddress=" + officeAddress +
                 '}';
     }
 
     public Employee() {
     }
 
-    public Employee(int id, String name, String position, int salary, int officeId) {
+    public Employee(int id, String name, String position, int salary, int officeId, String officeName, String officeAddress) {
         this.id = id;
         this.name = name;
         this.position = position;
         this.salary = salary;
         this.officeId = officeId;
+        this.officeName = officeName;
+        this.officeAddress = officeAddress;
     }
 
     public int getId() {
@@ -75,5 +74,21 @@ public class Employee {
 
     public void setOfficeId(int officeId) {
         this.officeId = officeId;
+    }
+
+    public String getOfficeName() {
+        return officeName;
+    }
+
+    public void setOfficeName(String officeName) {
+        this.officeName = officeName;
+    }
+
+    public String getOfficeAddress() {
+        return officeAddress;
+    }
+
+    public void setOfficeAddress(String officeAddress) {
+        this.officeAddress = officeAddress;
     }
 }
