@@ -24,15 +24,15 @@ public class App {
         employee.setOfficeId(1);
 
         System.out.println("Добавлен новый сотрудник: ");
-        System.out.println(CRUD.insertEmployee(connection, employee));
+        System.out.println(CRUD.insertEmployee(connection, employee, connection.prepareStatement("SELECT * FROM employee, office WHERE employee.office_id = office.id")));
 
         System.out.println();
-        System.out.println("Изменена должность и зарплата сотрудника: ");
-        System.out.println(CRUD.updateEmployee(connection,1, "engineer 2", 1200));
+        System.out.println("Изменена должность и зарплата сотрудника с id = 1: ");
+        System.out.println(CRUD.updateEmployee(connection,1, "engineer 2", 1200, connection.prepareStatement("SELECT * FROM employee, office WHERE employee.office_id = office.id")));
 
         System.out.println();
         System.out.println("Удаление сотрудника с id = 2: ");
-        System.out.println(CRUD.deleteEmployees(connection,2));
+        System.out.println(CRUD.deleteEmployees(connection,2, connection.prepareStatement("SELECT * FROM employee, office WHERE employee.office_id = office.id")));
 
 
         connection.close();

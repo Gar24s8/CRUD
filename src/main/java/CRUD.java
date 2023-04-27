@@ -4,9 +4,9 @@ import java.util.List;
 
 public class CRUD {
 
-    private static final String INSERT_EMPLOYEE = "INSERT INTO employee (name, position, salary, office_id) VALUES (?, ?, ?, ?);";
-    private static final String UPDATE_EMPLOYEE = "UPDATE employee SET position = ?, salary = ? WHERE id = ?";
-    private static final String DELETE_EMPLOYEE = "DELETE FROM employee WHERE id = ?";
+//    private static final String INSERT_EMPLOYEE = "INSERT INTO employee (name, position, salary, office_id) VALUES (?, ?, ?, ?);";
+//    private static final String UPDATE_EMPLOYEE = "UPDATE employee SET position = ?, salary = ? WHERE id = ?";
+//    private static final String DELETE_EMPLOYEE = "DELETE FROM employee WHERE id = ?";
 
     private static void getAllData(List<Employee> employees, PreparedStatement preparedStatement) throws SQLException {
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -57,17 +57,16 @@ public class CRUD {
     }
 
 
-    public static List<Employee> insertEmployee(Connection connection, Employee employee) {
+    public static List<Employee> insertEmployee(Connection connection, Employee employee, PreparedStatement allEmployee) {
         List<Employee> employees = new ArrayList<>();
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_EMPLOYEE)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO employee (name, position, salary, office_id) VALUES (?, ?, ?, ?);")) {
             preparedStatement.setString(1, employee.getName());
             preparedStatement.setString(2, employee.getPosition());
             preparedStatement.setInt(3, employee.getSalary());
             preparedStatement.setInt(4, employee.getOfficeId());
             preparedStatement.executeUpdate();
 
-            PreparedStatement allEmployee = connection.prepareStatement("SELECT * FROM employee, office WHERE employee.office_id = office.id");
             getAllData(employees, allEmployee);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -76,17 +75,16 @@ public class CRUD {
     }
 
 
-    public static List<Employee> updateEmployee(Connection connection, int id, String position, int salary) {
+    public static List<Employee> updateEmployee(Connection connection, int id, String position, int salary, PreparedStatement allEmployees) {
         List<Employee> updateEmployees = new ArrayList<>();
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_EMPLOYEE)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("UPDATE employee SET position = ?, salary = ? WHERE id = ?")) {
 
             preparedStatement.setString(1, position);
             preparedStatement.setInt(2, salary);
             preparedStatement.setInt(3, id);
             preparedStatement.executeUpdate();
 
-            PreparedStatement allEmployees = connection.prepareStatement("SELECT * FROM employee, office WHERE employee.office_id = office.id AND employee.id =1");
             getAllData(updateEmployees, allEmployees);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -95,15 +93,14 @@ public class CRUD {
     }
 
 
-    public static List<Employee> deleteEmployees(Connection connection, int id) {
+    public static List<Employee> deleteEmployees(Connection connection, int id, PreparedStatement allEmployees) {
         List<Employee> deleteEmployees = new ArrayList<>();
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_EMPLOYEE)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM employee WHERE id = ?")) {
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
 
-            PreparedStatement allemployees = connection.prepareStatement("SELECT * FROM employee, office WHERE employee.office_id = office.id");
-            getAllData(deleteEmployees, allemployees);
+            getAllData(deleteEmployees, allEmployees);
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
