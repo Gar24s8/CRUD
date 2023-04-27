@@ -3,6 +3,7 @@ import java.util.List;
 public class App {
 
     public static void main(String[] args) {
+        DBConnect.getConnection();
 
         List<Rates> rates = CRUD.getRatesData("SELECT * FROM rates");
         System.out.println("Вывод списка должностей с зарплатами: ");
@@ -30,6 +31,9 @@ public class App {
         System.out.println();
         System.out.println("Удаление сотрудника с id = 2: ");
         System.out.println(CRUD.deleteEmployees(2));
+
+
+
 
     }
 }

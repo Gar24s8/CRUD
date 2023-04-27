@@ -8,20 +8,6 @@ public class CRUD {
     private static String UPDATE_EMPLOYEE = "UPDATE employee SET position = ?, salary = ? WHERE id = ?";
     private static String DELETE_EMPLOYEE = "DELETE FROM employee WHERE id = ?";
 
-    public static List<Employee> getEmployeeData(String query) {
-        List<Employee> employees = new ArrayList<>();
-
-        try (Connection connection = DBConnect.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            getAllData(employees, preparedStatement);
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return employees;
-
-    }
-
     private static void getAllData(List<Employee> employees, PreparedStatement preparedStatement) throws SQLException {
         ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -34,12 +20,24 @@ public class CRUD {
             String officeName = resultSet.getString("office_name");
             String address = resultSet.getString("address");
 
-
             employees.add(new Employee(id, name, position, salary, officeId, officeName, address));
-
-
         }
     }
+
+
+    public static List<Employee> getEmployeeData(String query) {
+        List<Employee> employees = new ArrayList<>();
+
+        try (Connection connection = DBConnect.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            getAllData(employees, preparedStatement);
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return employees;
+    }
+
 
     public static List<Rates> getRatesData(String query){
         List<Rates> rates = new ArrayList<>();
@@ -79,6 +77,7 @@ public class CRUD {
         return employees;
     }
 
+
     public static List<Employee> updateEmployee(int id, String position, int salary) {
         List<Employee> updateEmployees = new ArrayList<>();
 
@@ -97,6 +96,7 @@ public class CRUD {
         }
         return updateEmployees;
     }
+
 
     public static List<Employee> deleteEmployees(int id) {
         List<Employee> deleteEmployees = new ArrayList<>();

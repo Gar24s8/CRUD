@@ -7,14 +7,14 @@ public class DBConnect {
     private static String dbURL = "jdbc:h2:mem:test;INIT=RUNSCRIPT FROM 'classpath:init.sql'";
     private static String dbUsername = "sa";
     private static String dbPassword = "";
+    private static Connection connection = null;
 
     public static Connection getConnection(){
-        Connection connection = null;
         try {
             connection = DriverManager.getConnection(dbURL, dbUsername, dbPassword);
             connection.setAutoCommit(true);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return connection;
     }

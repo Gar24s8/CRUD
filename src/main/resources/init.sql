@@ -1,6 +1,6 @@
-CREATE SCHEMA IF NOT EXISTS task;
+CREATE SCHEMA IF NOT EXISTS test;
 USE
-task;
+test;
 
 CREATE TABLE office
 (
