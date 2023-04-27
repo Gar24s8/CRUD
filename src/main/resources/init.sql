@@ -2,14 +2,14 @@ CREATE SCHEMA IF NOT EXISTS test;
 USE
 test;
 
-CREATE TABLE office
+CREATE TABLE IF NOT EXISTS office
 (
     id          BIGINT PRIMARY KEY,
     office_name VARCHAR(10),
     address     VARCHAR(50)
 );
 
-CREATE TABLE employee
+CREATE TABLE IF NOT EXISTS employee
 (
     id        BIGINT PRIMARY KEY AUTO_INCREMENT,
     name      VARCHAR(50),
@@ -18,7 +18,7 @@ CREATE TABLE employee
     office_id BIGINT REFERENCES office (id)
 );
 
-CREATE TABLE rates
+CREATE TABLE IF NOT EXISTS rates
 (
     id       BIGINT PRIMARY KEY AUTO_INCREMENT,
     position VARCHAR(30),

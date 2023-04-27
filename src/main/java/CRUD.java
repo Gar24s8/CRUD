@@ -4,9 +4,9 @@ import java.util.List;
 
 public class CRUD {
 
-    private static String INSERT_EMPLOYEE = "INSERT INTO employee (name, position, salary, office_id) VALUES (?, ?, ?, ?);";
-    private static String UPDATE_EMPLOYEE = "UPDATE employee SET position = ?, salary = ? WHERE id = ?";
-    private static String DELETE_EMPLOYEE = "DELETE FROM employee WHERE id = ?";
+    private static final String INSERT_EMPLOYEE = "INSERT INTO employee (name, position, salary, office_id) VALUES (?, ?, ?, ?);";
+    private static final String UPDATE_EMPLOYEE = "UPDATE employee SET position = ?, salary = ? WHERE id = ?";
+    private static final String DELETE_EMPLOYEE = "DELETE FROM employee WHERE id = ?";
 
     private static void getAllData(List<Employee> employees, PreparedStatement preparedStatement) throws SQLException {
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -25,11 +25,10 @@ public class CRUD {
     }
 
 
-    public static List<Employee> getEmployeeData(String query) {
+    public static List<Employee> getEmployeeData(Connection connection, String query) {
         List<Employee> employees = new ArrayList<>();
 
-        try (Connection connection = DBConnect.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             getAllData(employees, preparedStatement);
 
         } catch (SQLException throwables) {
@@ -39,12 +38,12 @@ public class CRUD {
     }
 
 
-    public static List<Rates> getRatesData(String query){
+    public static List<Rates> getRatesData(Connection connection, String query) {
         List<Rates> rates = new ArrayList<>();
 
-        try (Connection connection = DBConnect.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String position = resultSet.getString("position");
                 int salary = resultSet.getInt("salary");
@@ -58,11 +57,10 @@ public class CRUD {
     }
 
 
-    public static List<Employee> insertEmployee(Employee employee) {
+    public static List<Employee> insertEmployee(Connection connection, Employee employee) {
         List<Employee> employees = new ArrayList<>();
 
-        try (Connection connection = DBConnect.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_EMPLOYEE)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_EMPLOYEE)) {
             preparedStatement.setString(1, employee.getName());
             preparedStatement.setString(2, employee.getPosition());
             preparedStatement.setInt(3, employee.getSalary());
@@ -78,11 +76,10 @@ public class CRUD {
     }
 
 
-    public static List<Employee> updateEmployee(int id, String position, int salary) {
+    public static List<Employee> updateEmployee(Connection connection, int id, String position, int salary) {
         List<Employee> updateEmployees = new ArrayList<>();
 
-        try (Connection connection = DBConnect.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_EMPLOYEE)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_EMPLOYEE)) {
 
             preparedStatement.setString(1, position);
             preparedStatement.setInt(2, salary);
@@ -98,11 +95,10 @@ public class CRUD {
     }
 
 
-    public static List<Employee> deleteEmployees(int id) {
+    public static List<Employee> deleteEmployees(Connection connection, int id) {
         List<Employee> deleteEmployees = new ArrayList<>();
 
-        try (Connection connection = DBConnect.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_EMPLOYEE)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_EMPLOYEE)) {
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
 
