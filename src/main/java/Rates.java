@@ -3,6 +3,12 @@ public class Rates {
     private String position;
     private int salary;
 
+    public Rates(int id, String position, int salary) {
+        this.id = id;
+        this.position = position;
+        this.salary = salary;
+    }
+
     @Override
     public String toString() {
         return "Rates{" +
@@ -10,15 +16,6 @@ public class Rates {
                 ", position='" + position + '\'' +
                 ", salary=" + salary +
                 '}';
-    }
-
-    public Rates() {
-    }
-
-    public Rates(int id, String position, int salary) {
-        this.id = id;
-        this.position = position;
-        this.salary = salary;
     }
 
     public int getId() {

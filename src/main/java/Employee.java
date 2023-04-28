@@ -7,8 +7,25 @@ public class Employee {
     private String officeName;
     private String officeAddress;
 
-    public Employee(int id, String name, String position, int salary, int officeId) {
+
+
+    public Employee(int id, String name, String position, int salary, int officeId, String officeName, String officeAddress) {
+        this.id = id;
+        this.name = name;
+        this.position = position;
+        this.salary = salary;
+        this.officeId = officeId;
+        this.officeName = officeName;
+        this.officeAddress = officeAddress;
     }
+
+    public Employee(String name, String position, int salary, int officeId) {
+        this.name = name;
+        this.position = position;
+        this.salary = salary;
+        this.officeId = officeId;
+    }
+
 
 
     @Override
@@ -21,19 +38,6 @@ public class Employee {
                 ", officeName=" + officeName +
                 ", officeAddress=" + officeAddress +
                 '}';
-    }
-
-    public Employee() {
-    }
-
-    public Employee(int id, String name, String position, int salary, int officeId, String officeName, String officeAddress) {
-        this.id = id;
-        this.name = name;
-        this.position = position;
-        this.salary = salary;
-        this.officeId = officeId;
-        this.officeName = officeName;
-        this.officeAddress = officeAddress;
     }
 
     public int getId() {

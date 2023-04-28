@@ -4,11 +4,8 @@ import java.util.List;
 
 public class CRUD {
 
-//    private static final String INSERT_EMPLOYEE = "INSERT INTO employee (name, position, salary, office_id) VALUES (?, ?, ?, ?);";
-//    private static final String UPDATE_EMPLOYEE = "UPDATE employee SET position = ?, salary = ? WHERE id = ?";
-//    private static final String DELETE_EMPLOYEE = "DELETE FROM employee WHERE id = ?";
-
     private static void getAllData(List<Employee> employees, PreparedStatement preparedStatement) throws SQLException {
+
         ResultSet resultSet = preparedStatement.executeQuery();
 
         while (resultSet.next()) {
@@ -25,10 +22,10 @@ public class CRUD {
     }
 
 
-    public static List<Employee> getEmployeeData(Connection connection, String query) {
+    public static List<Employee> getEmployeeData(Connection connection) {
         List<Employee> employees = new ArrayList<>();
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from employee, office WHERE employee.office_id = office.id")) {
             getAllData(employees, preparedStatement);
 
         } catch (SQLException throwables) {
@@ -38,10 +35,10 @@ public class CRUD {
     }
 
 
-    public static List<Rates> getRatesData(Connection connection, String query) {
+    public static List<Rates> getRatesData(Connection connection) {
         List<Rates> rates = new ArrayList<>();
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM rates")) {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
