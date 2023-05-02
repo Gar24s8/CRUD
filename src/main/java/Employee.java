@@ -26,6 +26,13 @@ public class Employee {
         this.officeId = officeId;
     }
 
+    public Employee(int id, String position, int salary) {
+        this.id = id;
+        this.position = position;
+        this.salary = salary;
+    }
+
+
 
 
     @Override

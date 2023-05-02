@@ -24,8 +24,10 @@ public class App {
         System.out.println(CRUD.insertEmployee(connection, employee, connection.prepareStatement(emploeesInOffice)));
 
         System.out.println();
+
+        Employee employee1 = new Employee(1,"engineer 2", 1200);
         System.out.println("Изменена должность и зарплата сотрудника с id = 1: ");
-        System.out.println(CRUD.updateEmployee(connection, 1, "engineer 2", 1200, connection.prepareStatement(emploeesInOffice)));
+        System.out.println(CRUD.updateEmployee(connection, employee1, connection.prepareStatement(emploeesInOffice)));
 
         System.out.println();
         System.out.println("Удаление сотрудника с id = 2: ");

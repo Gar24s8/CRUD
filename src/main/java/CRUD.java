@@ -5,7 +5,6 @@ import java.util.List;
 public class CRUD {
 
     private static void getAllData(List<Employee> employees, PreparedStatement preparedStatement) throws SQLException {
-
         ResultSet resultSet = preparedStatement.executeQuery();
 
         while (resultSet.next()) {
@@ -72,14 +71,14 @@ public class CRUD {
     }
 
 
-    public static List<Employee> updateEmployee(Connection connection, int id, String position, int salary, PreparedStatement allEmployees) {
+    public static List<Employee> updateEmployee(Connection connection, Employee employee, PreparedStatement allEmployees) {
         List<Employee> updateEmployees = new ArrayList<>();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement("UPDATE employee SET position = ?, salary = ? WHERE id = ?")) {
 
-            preparedStatement.setString(1, position);
-            preparedStatement.setInt(2, salary);
-            preparedStatement.setInt(3, id);
+            preparedStatement.setString(1, employee.getPosition());
+            preparedStatement.setInt(2, employee.getSalary());
+            preparedStatement.setInt(3, employee.getId());
             preparedStatement.executeUpdate();
 
             getAllData(updateEmployees, allEmployees);
