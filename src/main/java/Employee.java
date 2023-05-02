@@ -7,8 +7,7 @@ public class Employee {
     private String officeName;
     private String officeAddress;
 
-
-
+    //TODO: try using constructor chaining
     public Employee(int id, String name, String position, int salary, int officeId, String officeName, String officeAddress) {
         this.id = id;
         this.name = name;
@@ -32,8 +31,8 @@ public class Employee {
         this.salary = salary;
     }
 
-
-
+    public Employee() {
+    }
 
     @Override
     public String toString() {
