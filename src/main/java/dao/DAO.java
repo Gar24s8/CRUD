@@ -15,9 +15,9 @@ public interface DAO {
 
     List<Office> findAllOffices();
 
-    void saveEmployee(Employee employee);
+    void createEmployee(Employee employee);
 
-    void saveOffice(Office office);
+    void createOffice(Office office);
 
     void updateEmployee(Employee employee);
 

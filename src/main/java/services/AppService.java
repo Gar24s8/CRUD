@@ -7,9 +7,9 @@ import models.Office;
 
 import java.util.List;
 
-public class Service {
+public class AppService {
 
-    public Service() {
+    public AppService() {
     }
 
     private DAO dao = new DAOImpl();
@@ -34,13 +34,13 @@ public class Service {
     }
 
 
-    public void saveEmployee(Employee employee) {
-        dao.saveEmployee(employee);
+    public void createEmployee(Employee employee) {
+        dao.createEmployee(employee);
     }
 
 
-    public void saveOffice(Office office) {
-        dao.saveOffice(office);
+    public void createOffice(Office office) {
+        dao.createOffice(office);
     }
 
 
