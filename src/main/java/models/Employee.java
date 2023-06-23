@@ -1,6 +1,8 @@
 package models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -20,9 +22,15 @@ public class Employee {
     @Column(name = "salary")
     private long salary;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "office_id")
     private Office office;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "employee_tasks", joinColumns = @JoinColumn(name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "tasks_id"))
+    private List<Tasks> tasks;
 
     public Employee() {
     }
@@ -31,6 +39,15 @@ public class Employee {
         this.name = name;
         this.position = position;
         this.salary = salary;
+        tasks = new ArrayList<>();
+    }
+
+    public void addTask(Tasks task) {
+        tasks.add(task);
+    }
+
+    public void removeTask(Tasks task) {
+        tasks.remove(task);
     }
 
     public int getId() {
@@ -67,6 +84,14 @@ public class Employee {
 
     public void setOffice(Office office) {
         this.office = office;
+    }
+
+    public List<Tasks> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Tasks> tasks) {
+        this.tasks = tasks;
     }
 
     @Override
