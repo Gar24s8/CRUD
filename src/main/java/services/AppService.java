@@ -63,11 +63,9 @@ public class AppService {
         dao.updateTask(tasks);
     }
 
-
     public void deleteEmployee(Employee employee) {
         dao.deleteEmployee(employee);
     }
-
 
     public void deleteOffice(Office office) {
         dao.deleteOffice(office);
@@ -76,5 +74,4 @@ public class AppService {
     public void deleteTask(Tasks tasks) {
         dao.deleteTask(tasks);
     }
-
 }

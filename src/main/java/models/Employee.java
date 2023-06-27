@@ -4,7 +4,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Entity
 @Table(name = "employee")
 public class Employee {
@@ -21,7 +20,6 @@ public class Employee {
 
     @Column(name = "salary")
     private long salary;
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "office_id")
