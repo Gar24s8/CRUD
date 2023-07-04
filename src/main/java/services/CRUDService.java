@@ -4,13 +4,13 @@ import dao.DAO;
 import dao.DAOImpl;
 import models.Employee;
 import models.Office;
-import models.Tasks;
+import models.Task;
 
 import java.util.List;
 
-public class AppService {
+public class CRUDService {
 
-    public AppService() {
+    public CRUDService() {
     }
 
     private final DAO dao = new DAOImpl();
@@ -23,7 +23,7 @@ public class AppService {
         return dao.findEmployeeById(id);
     }
 
-    public Tasks findTaskById(int id) {
+    public Task findTaskById(int id) {
         return dao.findTasksBytId(id);
     }
 
@@ -35,7 +35,7 @@ public class AppService {
         return dao.findAllOffices();
     }
 
-    public List<Tasks> findAllTasks() {
+    public List<Task> findAllTasks() {
         return dao.findAllTasks();
     }
 
@@ -47,8 +47,8 @@ public class AppService {
         dao.createOffice(office);
     }
 
-    public void createTask(Tasks tasks) {
-        dao.createTask(tasks);
+    public void createTask(Task task) {
+        dao.createTask(task);
     }
 
     public void updateEmployee(Employee employee) {
@@ -59,8 +59,8 @@ public class AppService {
         dao.updateOffice(office);
     }
 
-    public void updateTask(Tasks tasks) {
-        dao.updateTask(tasks);
+    public void updateTask(Task task) {
+        dao.updateTask(task);
     }
 
     public void deleteEmployee(Employee employee) {
@@ -71,7 +71,7 @@ public class AppService {
         dao.deleteOffice(office);
     }
 
-    public void deleteTask(Tasks tasks) {
-        dao.deleteTask(tasks);
+    public void deleteTask(Task task) {
+        dao.deleteTask(task);
     }
 }

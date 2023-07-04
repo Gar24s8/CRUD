@@ -2,7 +2,7 @@ package dao;
 
 import models.Employee;
 import models.Office;
-import models.Tasks;
+import models.Task;
 
 import java.util.List;
 
@@ -12,29 +12,29 @@ public interface DAO {
 
     Employee findEmployeeById(int id);
 
-    Tasks findTasksBytId(int id);
+    Task findTasksBytId(int id);
 
     List<Employee> findAllEmployees();
 
     List<Office> findAllOffices();
 
-    List<Tasks> findAllTasks();
+    List<Task> findAllTasks();
 
     void createEmployee(Employee employee);
 
     void createOffice(Office office);
 
-    void createTask(Tasks tasks);
+    void createTask(Task task);
 
     void updateEmployee(Employee employee);
 
     void updateOffice(Office office);
 
-    void updateTask(Tasks tasks);
+    void updateTask(Task task);
 
     void deleteEmployee(Employee employee);
 
     void deleteOffice(Office office);
 
-    void deleteTask(Tasks tasks);
+    void deleteTask(Task task);
 }

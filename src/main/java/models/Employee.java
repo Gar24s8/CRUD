@@ -28,7 +28,7 @@ public class Employee {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "employee_tasks", joinColumns = @JoinColumn(name = "employee_id"),
             inverseJoinColumns = @JoinColumn(name = "tasks_id"))
-    private List<Tasks> tasks;
+    private List<Task> tasks;
 
     public Employee() {
     }
@@ -40,11 +40,11 @@ public class Employee {
         tasks = new ArrayList<>();
     }
 
-    public void addTask(Tasks task) {
+    public void addTask(Task task) {
         tasks.add(task);
     }
 
-    public void removeTask(Tasks task) {
+    public void removeTask(Task task) {
         tasks.remove(task);
     }
 
@@ -84,11 +84,11 @@ public class Employee {
         this.office = office;
     }
 
-    public List<Tasks> getTasks() {
+    public List<Task> getTasks() {
         return tasks;
     }
 
-    public void setTasks(List<Tasks> tasks) {
+    public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
     }
 

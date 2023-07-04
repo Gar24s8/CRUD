@@ -1,12 +1,14 @@
 package models;
 
+import org.hibernate.annotations.OnDelete;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "tasks")
-public class Tasks {
+public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,15 +20,15 @@ public class Tasks {
     @Column(name = "deadline")
     private String deadline;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "employee_tasks", joinColumns = @JoinColumn(name = "tasks_id"),
             inverseJoinColumns = @JoinColumn(name = "employee_id"))
     private List<Employee> employees;
 
-    public Tasks() {
+    public Task() {
     }
 
-    public Tasks(String description, String deadline) {
+    public Task(String description, String deadline) {
         this.description = description;
         this.deadline = deadline;
         employees = new ArrayList<>();

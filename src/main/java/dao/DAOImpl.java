@@ -2,7 +2,7 @@ package dao;
 
 import models.Employee;
 import models.Office;
-import models.Tasks;
+import models.Task;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import utils.HibernateSessionFactoryUtil;
@@ -13,44 +13,44 @@ public class DAOImpl implements DAO {
 
     public Office findOfficeById(int id) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Office findOffice = null;
+        Office foundOffice = null;
         try {
-            findOffice = session.load(Office.class, id);
-            System.out.println(findOffice);
+            foundOffice = session.load(Office.class, id);
+            System.out.println(foundOffice);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             session.close();
         }
-        return findOffice;
+        return foundOffice;
     }
 
     public Employee findEmployeeById(int id) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Employee findEmployee = null;
+        Employee foundEmployee = null;
         try {
-            findEmployee = session.load(Employee.class, id);
-            System.out.println(findEmployee);
+            foundEmployee = session.load(Employee.class, id);
+            System.out.println(foundEmployee);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             session.close();
         }
-        return findEmployee;
+        return foundEmployee;
     }
 
-    public Tasks findTasksBytId(int id) {
+    public Task findTasksBytId(int id) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        Tasks findTasks = null;
+        Task foundTask = null;
         try {
-            findTasks = session.load(Tasks.class, id);
-            System.out.println(findTasks);
+            foundTask = session.load(Task.class, id);
+            System.out.println(foundTask);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             session.close();
         }
-        return findTasks;
+        return foundTask;
     }
 
     public List<Employee> findAllEmployees() {
@@ -81,11 +81,11 @@ public class DAOImpl implements DAO {
         return offices;
     }
 
-    public List<Tasks> findAllTasks() {
+    public List<Task> findAllTasks() {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        List<Tasks> tasks = null;
+        List<Task> tasks = null;
         try {
-            tasks = (List<Tasks>) session.createQuery("FROM Tasks ").list();
+            tasks = (List<Task>) session.createQuery("FROM Task ").list();
             System.out.println(tasks);
         } catch (Exception e) {
             e.printStackTrace();
@@ -125,12 +125,12 @@ public class DAOImpl implements DAO {
         }
     }
 
-    public void createTask(Tasks tasks) {
+    public void createTask(Task task) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = null;
         try {
             tx1 = session.beginTransaction();
-            session.save(tasks);
+            session.save(task);
             tx1.commit();
         } catch (Exception e) {
             if (tx1 != null) tx1.rollback();
@@ -170,12 +170,12 @@ public class DAOImpl implements DAO {
         }
     }
 
-    public void updateTask(Tasks tasks) {
+    public void updateTask(Task task) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = null;
         try {
             tx1 = session.beginTransaction();
-            session.update(tasks);
+            session.update(task);
             tx1.commit();
         } catch (Exception e) {
             if (tx1 != null) tx1.rollback();
@@ -214,12 +214,12 @@ public class DAOImpl implements DAO {
         }
     }
 
-    public void deleteTask(Tasks tasks) {
+    public void deleteTask(Task task) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = null;
         try {
             tx1 = session.beginTransaction();
-            session.delete(tasks);
+            session.delete(task);
             tx1.commit();
         } catch (Exception e) {
             if (tx1 != null) tx1.rollback();
