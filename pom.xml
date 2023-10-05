@@ -10,6 +10,7 @@
     <version>3.0.0</version>
     <modules>
         <module>CRUD2-Hibernate</module>
+        <module>CRUD3-Servlets</module>
     </modules>
 
 
