@@ -37,4 +37,5 @@ public interface DAO {
     void deleteOffice(Office office);
 
     void deleteTask(Task task);
+
 }
