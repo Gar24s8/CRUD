@@ -74,4 +74,6 @@ public class CRUDService {
     public void deleteTask(Task task) {
         dao.deleteTask(task);
     }
+
+    public void deleteEmployeeById(int id) {dao.deleteEmployeeById(id);}
 }
