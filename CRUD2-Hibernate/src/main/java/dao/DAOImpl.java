@@ -3,7 +3,6 @@ package dao;
 import models.Employee;
 import models.Office;
 import models.Task;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import utils.HibernateSessionFactoryUtil;
@@ -230,13 +229,16 @@ public class DAOImpl implements DAO {
         }
     }
 
-    public void deleteEmployeeById(int id){
+    public void deleteEmployeeById(int id) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        Query query = session.createQuery("from Employee where id=:id");
-        query.setInteger("id", id);
-        Employee employee = (Employee) query.uniqueResult();
-        session.delete(employee);
+        Employee employee = session.get(Employee.class, id);
+        session.getTransaction().commit();
+
+        session.beginTransaction();
+        if (employee != null) {
+            session.delete(employee);
+        }
         session.getTransaction().commit();
         session.close();
     }

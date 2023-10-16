@@ -16,6 +16,7 @@ public class EditServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         CRUDService service = new CRUDService();
+
         try {
             int id = Integer.parseInt(req.getParameter("id"));
             Employee employee = service.findEmployeeById(id);
@@ -32,6 +33,8 @@ public class EditServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+
         CRUDService service = new CRUDService();
 
         try {

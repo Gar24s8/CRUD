@@ -19,12 +19,13 @@ public class CreateServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         CRUDService service = new CRUDService();
         try {
             String name = req.getParameter("name");
             String position = req.getParameter("position");
             Long salary = Long.parseLong(req.getParameter("salary"));
-            Employee employee = new Employee();
+            Employee employee = new Employee(name, position, salary);
             service.createEmployee(employee);
             resp.sendRedirect(req.getContextPath() + "/index");
 
