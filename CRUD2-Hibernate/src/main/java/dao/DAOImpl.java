@@ -231,15 +231,17 @@ public class DAOImpl implements DAO {
 
     public void deleteEmployeeById(int id) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        Employee employee = session.get(Employee.class, id);
-        session.getTransaction().commit();
-
-        session.beginTransaction();
-        if (employee != null) {
+        Transaction tx1 = null;
+        try {
+            tx1 = session.beginTransaction();
+            Employee employee = session.get(Employee.class, id);
             session.delete(employee);
+            tx1.commit();
+        } catch (Exception e) {
+            if (tx1 != null) tx1.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
         }
-        session.getTransaction().commit();
-        session.close();
     }
 }

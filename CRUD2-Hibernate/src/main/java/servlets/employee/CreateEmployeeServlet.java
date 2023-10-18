@@ -1,4 +1,4 @@
-package Servlets;
+package servlets.employee;
 
 import models.Employee;
 import services.CRUDService;
@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/create")
-public class CreateServlet extends HttpServlet {
+@WebServlet("/employee/create")
+public class CreateEmployeeServlet extends HttpServlet {
+    CRUDService service = new CRUDService();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         getServletContext().getRequestDispatcher("/create.jsp").forward(req, resp);
@@ -20,17 +22,17 @@ public class CreateServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        CRUDService service = new CRUDService();
+
         try {
             String name = req.getParameter("name");
             String position = req.getParameter("position");
             Long salary = Long.parseLong(req.getParameter("salary"));
             Employee employee = new Employee(name, position, salary);
             service.createEmployee(employee);
-            resp.sendRedirect(req.getContextPath() + "/index");
+            resp.sendRedirect(req.getContextPath() + "/employee/index");
 
         } catch (Exception e) {
-            getServletContext().getRequestDispatcher("/create.jsp").forward(req, resp);
+            throw new ServletException(e);
         }
     }
 }

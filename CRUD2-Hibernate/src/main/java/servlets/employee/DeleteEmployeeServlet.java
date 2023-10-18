@@ -1,4 +1,4 @@
-package Servlets;
+package servlets.employee;
 
 import services.CRUDService;
 
@@ -9,19 +9,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/delete")
-public class DeleteServlet extends HttpServlet {
+@WebServlet("/employee/delete")
+public class DeleteEmployeeServlet extends HttpServlet {
+    CRUDService service = new CRUDService();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        CRUDService service = new CRUDService();
 
         try {
             int id = Integer.parseInt(req.getParameter("id"));
             service.deleteEmployeeById(id);
-            resp.sendRedirect(req.getContextPath() + "/index");
+            resp.sendRedirect(req.getContextPath() + "/employee/index");
         } catch (Exception e) {
-            getServletContext().getRequestDispatcher("/notFound.jsp").forward(req, resp);
+            getServletContext().getRequestDispatcher("/error.jsp").forward(req, resp);
         }
     }
 }

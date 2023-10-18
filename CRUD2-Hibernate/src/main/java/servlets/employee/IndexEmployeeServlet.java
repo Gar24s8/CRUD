@@ -1,4 +1,4 @@
-package Servlets;
+package servlets.employee;
 
 import models.Employee;
 import services.CRUDService;
@@ -11,12 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/index")
-public class IndexServlet extends HttpServlet {
+@WebServlet("/employee/index")
+public class IndexEmployeeServlet extends HttpServlet {
+    CRUDService service = new CRUDService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        CRUDService service = new CRUDService();
 
         List<Employee> employees = service.findAllEmployees();
         req.setAttribute("employees", employees);

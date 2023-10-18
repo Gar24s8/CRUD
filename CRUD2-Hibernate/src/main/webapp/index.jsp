@@ -13,7 +13,7 @@
 </head>
 <body>
 <h2>Employee List</h2>
-<p><a href='<c:url value="/create" />'>Create new</a></p>
+<p><a href='<c:url value="/employee/create" />'>Create new</a></p>
 <table>
     <tr>
         <th>Name</th>
@@ -27,8 +27,8 @@
             <td>${employee.position}</td>
             <td>${employee.salary}</td>
             <td>
-                <a href='<c:url value="/edit?id=${employee.id}" />'>Edit</a> |
-                <form method="post" action='<c:url value="/delete" />' style="display:inline;">
+                <a href='<c:url value="/employee/edit?id=${employee.id}" />'>Edit</a> |
+                <form method="post" action='<c:url value="/employee/delete" />' style="display:inline;">
                     <input type="hidden" name="id" value="${employee.id}">
                     <input type="submit" value="Delete">
                 </form>
