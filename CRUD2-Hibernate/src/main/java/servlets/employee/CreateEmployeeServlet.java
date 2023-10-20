@@ -16,7 +16,7 @@ public class CreateEmployeeServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/create.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/employee/create.jsp").forward(req, resp);
     }
 
     @Override
@@ -26,13 +26,12 @@ public class CreateEmployeeServlet extends HttpServlet {
         try {
             String name = req.getParameter("name");
             String position = req.getParameter("position");
-            Long salary = Long.parseLong(req.getParameter("salary"));
+            long salary = Long.parseLong(req.getParameter("salary"));
             Employee employee = new Employee(name, position, salary);
             service.createEmployee(employee);
             resp.sendRedirect(req.getContextPath() + "/employee/index");
-
         } catch (Exception e) {
-            throw new ServletException(e);
+            getServletContext().getRequestDispatcher("/employee/error.jsp").forward(req, resp);
         }
     }
 }

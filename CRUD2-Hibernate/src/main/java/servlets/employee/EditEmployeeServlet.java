@@ -16,14 +16,14 @@ public class EditEmployeeServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        int id = Integer.parseInt(req.getParameter("id"));
-        Employee employee = service.findEmployeeById(id);
-        if (employee == null) {
-            throw new ServletException("You must type values");
+        try {
+            int id = Integer.parseInt(req.getParameter("id"));
+            Employee employee = service.findEmployeeById(id);
+            req.setAttribute("employee", employee);
+            getServletContext().getRequestDispatcher("/employee/edit.jsp").forward(req, resp);
+        } catch (Throwable t) {
+            throw new ServletException("Error: " + t.getMessage(), t);
         }
-        req.setAttribute("employee", employee);
-        getServletContext().getRequestDispatcher("/edit.jsp").forward(req, resp);
     }
 
     @Override
@@ -34,12 +34,12 @@ public class EditEmployeeServlet extends HttpServlet {
             int id = Integer.parseInt(req.getParameter("id"));
             String name = req.getParameter("name");
             String position = req.getParameter("position");
-            Long salary = Long.parseLong(req.getParameter("salary"));
+            long salary = Long.parseLong(req.getParameter("salary"));
             Employee employee = new Employee(id, name, position, salary);
             service.updateEmployee(employee);
             resp.sendRedirect(req.getContextPath() + "/employee/index");
         } catch (Exception e) {
-            throw new ServletException(e.getMessage());
+            getServletContext().getRequestDispatcher("/employee/error.jsp").forward(req, resp);
         }
     }
 }
