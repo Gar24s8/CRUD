@@ -1,6 +1,7 @@
 package servlets.employee;
 
 import models.Employee;
+import org.apache.commons.lang3.StringUtils;
 import services.CRUDService;
 
 import javax.servlet.ServletException;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet("/employee/edit")
 public class EditEmployeeServlet extends HttpServlet {
@@ -36,8 +38,12 @@ public class EditEmployeeServlet extends HttpServlet {
             String position = req.getParameter("position");
             long salary = Long.parseLong(req.getParameter("salary"));
             Employee employee = new Employee(id, name, position, salary);
-            service.updateEmployee(employee);
-            resp.sendRedirect(req.getContextPath() + "/employee/index");
+            if (StringUtils.isEmpty(name) | StringUtils.isEmpty(position)) {
+                PrintWriter pw = resp.getWriter().printf("All fields must be filled in");
+            } else {
+                service.updateEmployee(employee);
+                resp.sendRedirect(req.getContextPath() + "/employee/index");
+            }
         } catch (Exception e) {
             getServletContext().getRequestDispatcher("/employee/error.jsp").forward(req, resp);
         }
