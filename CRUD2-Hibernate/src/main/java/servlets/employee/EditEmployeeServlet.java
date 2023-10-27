@@ -41,8 +41,13 @@ public class EditEmployeeServlet extends HttpServlet {
             if (StringUtils.isEmpty(name) | StringUtils.isEmpty(position)) {
                 PrintWriter pw = resp.getWriter().printf("All fields must be filled in");
             } else {
-                service.updateEmployee(employee);
-                resp.sendRedirect(req.getContextPath() + "/employee/index");
+                boolean isRowEdited = service.updateEmployee(employee);
+                if (isRowEdited) {
+                    resp.sendRedirect(req.getContextPath() + "/employee/index");
+                } else {
+                    PrintWriter pw = resp.getWriter().printf("Employee " + employee + " not edited.");
+                    System.out.println("Employee " + employee + " not edited.");
+                }
             }
         } catch (Exception e) {
             getServletContext().getRequestDispatcher("/employee/error.jsp").forward(req, resp);

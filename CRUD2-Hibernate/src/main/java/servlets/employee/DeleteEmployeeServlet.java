@@ -26,6 +26,9 @@ public class DeleteEmployeeServlet extends HttpServlet {
             boolean isRowDeleted = service.deleteEmployeeById(id);
             if (isRowDeleted) {
                 resp.sendRedirect(req.getContextPath() + "/employee/index");
+            } else {
+                PrintWriter pw = resp.getWriter().printf("Employee " + id + " not exists.");
+                System.out.println("Employee " + id + " not exists.");
             }
         } catch (Exception e) {
             getServletContext().getRequestDispatcher("/employee/error.jsp").forward(req, resp);

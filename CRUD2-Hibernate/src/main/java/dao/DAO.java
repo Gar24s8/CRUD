@@ -20,13 +20,13 @@ public interface DAO {
 
     List<Task> findAllTasks();
 
-    void createEmployee(Employee employee);
+    boolean createEmployee(Employee employee);
 
     void createOffice(Office office);
 
     void createTask(Task task);
 
-    void updateEmployee(Employee employee);
+    boolean updateEmployee(Employee employee);
 
     void updateOffice(Office office);
 

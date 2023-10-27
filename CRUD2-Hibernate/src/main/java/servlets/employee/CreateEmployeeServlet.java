@@ -33,8 +33,13 @@ public class CreateEmployeeServlet extends HttpServlet {
                 PrintWriter pw = resp.getWriter().printf("All fields must be filled in");
             } else {
                 Employee employee = new Employee(name, position, salary);
-                service.createEmployee(employee);
-                resp.sendRedirect(req.getContextPath() + "/employee/index");
+                boolean isRowCreated = service.createEmployee(employee);
+                if (isRowCreated) {
+                    resp.sendRedirect(req.getContextPath() + "/employee/index");
+                } else {
+                    PrintWriter pw = resp.getWriter().printf("Employee " + employee + " not created.");
+                    System.out.println("Employee " + employee + " not created.");
+                }
             }
         } catch (Exception e) {
             getServletContext().getRequestDispatcher("/employee/error.jsp").forward(req, resp);

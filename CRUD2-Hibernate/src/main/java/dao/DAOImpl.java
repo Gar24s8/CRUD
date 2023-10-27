@@ -95,7 +95,7 @@ public class DAOImpl implements DAO {
         return tasks;
     }
 
-    public void createEmployee(Employee employee) {
+    public boolean createEmployee(Employee employee) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = null;
         try {
@@ -105,9 +105,11 @@ public class DAOImpl implements DAO {
         } catch (Exception e) {
             if (tx1 != null) tx1.rollback();
             e.printStackTrace();
+            return false;
         } finally {
             session.close();
         }
+        return true;
     }
 
     public void createOffice(Office office) {
@@ -140,7 +142,7 @@ public class DAOImpl implements DAO {
         }
     }
 
-    public void updateEmployee(Employee employee) {
+    public boolean updateEmployee(Employee employee) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Transaction tx1 = null;
         try {
@@ -150,9 +152,11 @@ public class DAOImpl implements DAO {
         } catch (Exception e) {
             if (tx1 != null) tx1.rollback();
             e.printStackTrace();
+            return false;
         } finally {
             session.close();
         }
+        return true;
     }
 
     public void updateOffice(Office office) {
