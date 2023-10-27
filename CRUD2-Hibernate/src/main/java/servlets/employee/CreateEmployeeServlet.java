@@ -29,10 +29,10 @@ public class CreateEmployeeServlet extends HttpServlet {
             String name = req.getParameter("name");
             String position = req.getParameter("position");
             long salary = Long.parseLong(req.getParameter("salary"));
-            Employee employee = new Employee(name, position, salary);
             if (StringUtils.isEmpty(name) | StringUtils.isEmpty(position)) {
                 PrintWriter pw = resp.getWriter().printf("All fields must be filled in");
             } else {
+                Employee employee = new Employee(name, position, salary);
                 service.createEmployee(employee);
                 resp.sendRedirect(req.getContextPath() + "/employee/index");
             }

@@ -145,7 +145,7 @@ public class DAOImpl implements DAO {
         Transaction tx1 = null;
         try {
             tx1 = session.beginTransaction();
-            if (employee != null) session.update(employee);
+            session.update(employee);
             tx1.commit();
         } catch (Exception e) {
             if (tx1 != null) tx1.rollback();
@@ -229,22 +229,25 @@ public class DAOImpl implements DAO {
         }
     }
 
-    public Employee deleteEmployeeById(int id) {
+    public boolean deleteEmployeeById(int id) {
         Transaction tx1 = null;
-        Employee employee = null;
+        Employee employee;
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             tx1 = session.beginTransaction();
             employee = session.get(Employee.class, id);
             if (employee != null) {
                 session.delete(employee);
+                tx1.commit();
                 System.out.println("Employee " + id + " deleted!");
+            } else {
+                System.out.println("Employee " + id + " is already deleted by another user!");
             }
-            tx1.commit();
         } catch (Exception e) {
             if (tx1 != null) tx1.rollback();
             e.printStackTrace();
+            return false;
         }
-        return employee;
+        return true;
     }
 }
 

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: gar24
@@ -20,5 +21,9 @@
 <h2>Exception occurred while processing the request</h2>
 <p>Type: <%= exception%></p>
 <p>Message: <%= message %></p>
+
+<form action='<c:url value="/employee/index" />' style="display:inline;">
+    <input type="submit" value="Back">
+</form>
 </body>
 </html>

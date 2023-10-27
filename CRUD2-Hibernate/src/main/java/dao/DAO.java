@@ -38,5 +38,5 @@ public interface DAO {
 
     void deleteTask(Task task);
 
-    Employee deleteEmployeeById(int id);
+    boolean deleteEmployeeById(int id);
 }

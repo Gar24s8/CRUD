@@ -1,5 +1,7 @@
 package servlets.employee;
 
+import models.Employee;
+import org.apache.commons.lang3.StringUtils;
 import services.CRUDService;
 
 import javax.servlet.ServletException;
@@ -8,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @WebServlet("/employee/delete")
 public class DeleteEmployeeServlet extends HttpServlet {
@@ -18,8 +23,10 @@ public class DeleteEmployeeServlet extends HttpServlet {
 
         try {
             int id = Integer.parseInt(req.getParameter("id"));
-            service.deleteEmployeeById(id);
-            resp.sendRedirect(req.getContextPath() + "/employee/index");
+            boolean isRowDeleted = service.deleteEmployeeById(id);
+            if (isRowDeleted) {
+                resp.sendRedirect(req.getContextPath() + "/employee/index");
+            }
         } catch (Exception e) {
             getServletContext().getRequestDispatcher("/employee/error.jsp").forward(req, resp);
         }
