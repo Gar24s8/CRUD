@@ -39,8 +39,8 @@ public class CRUDService {
         return dao.findAllTasks();
     }
 
-    public void createEmployee(Employee employee) {
-        dao.createEmployee(employee);
+    public boolean createEmployee(Employee employee) {
+        return dao.createEmployee(employee);
     }
 
     public void createOffice(Office office) {
@@ -51,8 +51,8 @@ public class CRUDService {
         dao.createTask(task);
     }
 
-    public void updateEmployee(Employee employee) {
-        dao.updateEmployee(employee);
+    public boolean updateEmployee(Employee employee) {
+        return dao.updateEmployee(employee);
     }
 
     public void updateOffice(Office office) {
@@ -73,5 +73,9 @@ public class CRUDService {
 
     public void deleteTask(Task task) {
         dao.deleteTask(task);
+    }
+
+    public boolean deleteEmployeeById(int id) {
+       return dao.deleteEmployeeById(id);
     }
 }

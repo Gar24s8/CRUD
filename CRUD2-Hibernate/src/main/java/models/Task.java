@@ -1,7 +1,5 @@
 package models;
 
-import org.hibernate.annotations.OnDelete;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;

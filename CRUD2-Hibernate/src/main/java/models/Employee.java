@@ -33,6 +33,14 @@ public class Employee {
     public Employee() {
     }
 
+    public Employee(int id, String name, String position, long salary) {
+        this.id = id;
+        this.name = name;
+        this.position = position;
+        this.salary = salary;
+    }
+
+
     public Employee(String name, String position, long salary) {
         this.name = name;
         this.position = position;
@@ -50,6 +58,10 @@ public class Employee {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
