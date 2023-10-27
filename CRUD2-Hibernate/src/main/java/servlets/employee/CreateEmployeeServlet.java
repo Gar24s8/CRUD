@@ -37,8 +37,7 @@ public class CreateEmployeeServlet extends HttpServlet {
                 if (isRowCreated) {
                     resp.sendRedirect(req.getContextPath() + "/employee/index");
                 } else {
-                    PrintWriter pw = resp.getWriter().printf("Employee " + employee + " not created.");
-                    System.out.println("Employee " + employee + " not created.");
+                    throw new Exception("Employee " + employee + " is not created.");
                 }
             }
         } catch (Exception e) {

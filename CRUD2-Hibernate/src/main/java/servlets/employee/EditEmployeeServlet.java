@@ -45,8 +45,7 @@ public class EditEmployeeServlet extends HttpServlet {
                 if (isRowEdited) {
                     resp.sendRedirect(req.getContextPath() + "/employee/index");
                 } else {
-                    PrintWriter pw = resp.getWriter().printf("Employee " + employee + " not edited.");
-                    System.out.println("Employee " + employee + " not edited.");
+                    throw new Exception("Employee " + id + " is not edited.");
                 }
             }
         } catch (Exception e) {
