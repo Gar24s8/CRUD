@@ -10,19 +10,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet("/employee/edit")
 public class EditEmployeeServlet extends HttpServlet {
+
+    static final String EDIT_EMPLOYEE_PAGE = "/employee/edit.jsp";
+    static final String ERROR_PAGE = "/employee/error.jsp";
+
     CRUDService service = new CRUDService();
 
+    // TODO: what if employee not found?
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException {
         try {
             int id = Integer.parseInt(req.getParameter("id"));
             Employee employee = service.findEmployeeById(id);
             req.setAttribute("employee", employee);
-            getServletContext().getRequestDispatcher("/employee/edit.jsp").forward(req, resp);
+            getServletContext().getRequestDispatcher(EDIT_EMPLOYEE_PAGE).forward(req, resp);
         } catch (Throwable t) {
             throw new ServletException("Error: " + t.getMessage(), t);
         }
@@ -30,16 +34,17 @@ public class EditEmployeeServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("UTF-8");
-
         try {
+            req.setCharacterEncoding("UTF-8");
+
             int id = Integer.parseInt(req.getParameter("id"));
             String name = req.getParameter("name");
             String position = req.getParameter("position");
             long salary = Long.parseLong(req.getParameter("salary"));
             Employee employee = new Employee(id, name, position, salary);
+
             if (StringUtils.isEmpty(name) | StringUtils.isEmpty(position)) {
-                PrintWriter pw = resp.getWriter().printf("All fields must be filled in");
+                resp.getWriter().print("All fields must be filled in");
             } else {
                 boolean isRowEdited = service.updateEmployee(employee);
                 if (isRowEdited) {
@@ -49,7 +54,7 @@ public class EditEmployeeServlet extends HttpServlet {
                 }
             }
         } catch (Exception e) {
-            getServletContext().getRequestDispatcher("/employee/error.jsp").forward(req, resp);
+            getServletContext().getRequestDispatcher(ERROR_PAGE).forward(req, resp);
         }
     }
 }
