@@ -16,6 +16,8 @@ import java.util.logging.Logger;
 
 @WebServlet("/employee/delete")
 public class DeleteEmployeeServlet extends HttpServlet {
+    static final String ERROR_PAGE = "/employee/error.jsp";
+
     CRUDService service = new CRUDService();
 
     @Override
@@ -30,7 +32,7 @@ public class DeleteEmployeeServlet extends HttpServlet {
                 throw new Exception("Employee " + id + " is already deleted.");
             }
         } catch (Exception e) {
-            getServletContext().getRequestDispatcher("/employee/error.jsp").forward(req, resp);
+            getServletContext().getRequestDispatcher(ERROR_PAGE).forward(req, resp);
         }
     }
 }
