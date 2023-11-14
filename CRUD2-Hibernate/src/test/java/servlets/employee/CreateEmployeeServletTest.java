@@ -20,11 +20,11 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 import static org.mockito.Mockito.*;
-import static servlets.employee.EditEmployeeServlet.EDIT_EMPLOYEE_PAGE;
-import static servlets.employee.EditEmployeeServlet.ERROR_PAGE;
+import static servlets.employee.CreateEmployeeServlet.CREATE_EMPLOYEE_PAGE;
+import static servlets.employee.CreateEmployeeServlet.ERROR_PAGE;
 
 @RunWith(MockitoJUnitRunner.class)
-public class EditEmployeeServletTest {
+public class CreateEmployeeServletTest {
 
     @Mock
     private CRUDService service;
@@ -38,7 +38,7 @@ public class EditEmployeeServletTest {
     private ServletContext servletContext;
     @Spy
     @InjectMocks
-    private EditEmployeeServlet servlet;
+    private CreateEmployeeServlet servlet;
 
     @Before
     public void setUp() {
@@ -47,46 +47,33 @@ public class EditEmployeeServletTest {
     }
 
     @Test
-    public void doGet_shouldShowEmployeeForUpdate_whenFound() throws ServletException, IOException {
-        when(request.getParameter("id")).thenReturn("1");
-        when(service.findEmployeeById(1)).thenReturn(new Employee());
+    public void doGet_shouldShowCreateEmployeePage_whenGetRequest() throws Exception {
+        when(service.createEmployee(any())).thenReturn(true);
 
         servlet.doGet(request, response);
 
-        verify(request).setAttribute(eq("employee"), any(Employee.class));
-        verify(servletContext).getRequestDispatcher(EDIT_EMPLOYEE_PAGE);
+        verify(servletContext).getRequestDispatcher(CREATE_EMPLOYEE_PAGE);
         verify(requestDispatcher).forward(request, response);
     }
 
-    @Test
-    public void doGet_shouldFail_whenNotFound() throws ServletException, IOException {
-        when(request.getParameter("id")).thenReturn("0");
-        when(service.findEmployeeById(0)).thenReturn(null);
-
-        servlet.doGet(request, response);
-
-        verify(servletContext).getRequestDispatcher(ERROR_PAGE);
-    }
 
     @Test
-    public void doPost_shouldUpdateAndShowIndex_whenAllFieldsFilled() throws ServletException, IOException {
-        when(request.getParameter("id")).thenReturn("1");
+    public void doPost_shouldCreateAndShowIndex_whenAllFieldsFilled() throws Exception {
         when(request.getParameter("name")).thenReturn("Igor");
         when(request.getParameter("position")).thenReturn("Engineer");
         when(request.getParameter("salary")).thenReturn("1000");
-        when(service.updateEmployee(any(Employee.class))).thenReturn(true);
+        when(service.createEmployee(any(Employee.class))).thenReturn(true);
 
         servlet.doPost(request, response);
 
-        verify(service).updateEmployee(any(Employee.class));
+        verify(service).createEmployee(any(Employee.class));
         verify(response).sendRedirect(request.getContextPath() + "/employee/index");
     }
 
     @Test
-    public void doPost_shouldSendInformMessage_whenFieldsNotFilled() throws ServletException, IOException {
-        when(request.getParameter("id")).thenReturn("1");
+    public void doPost_shouldSendInformMessage_whenFieldsNotFilled() throws Exception {
         when(request.getParameter("name")).thenReturn("");
-        when(request.getParameter("position")).thenReturn("");
+        when(request.getParameter("position")).thenReturn("Engineer");
         when(request.getParameter("salary")).thenReturn("1000");
 
         StringWriter stringWriter = new StringWriter();
@@ -102,15 +89,11 @@ public class EditEmployeeServletTest {
 
     @Test
     public void doPost_shouldShowError_whenNotUpdated() throws ServletException, IOException {
-        when(service.updateEmployee(any())).thenReturn(false);
+        when(service.createEmployee(any())).thenReturn(false);
 
         servlet.doPost(request, response);
 
+        verify(servletContext).getRequestDispatcher(ERROR_PAGE);
         verify(requestDispatcher).forward(request, response);
-    }
-
-    @Test
-    public void doPost_shouldShowError_whenExceptionIsThrown() throws ServletException, IOException {
-
     }
 }

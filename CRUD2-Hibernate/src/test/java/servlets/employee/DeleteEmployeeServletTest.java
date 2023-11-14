@@ -22,18 +22,18 @@ import static org.mockito.Mockito.*;
 public class DeleteEmployeeServletTest {
 
     @Mock
-    CRUDService service;
+    private CRUDService service;
     @Mock
-    HttpServletRequest request;
+    private HttpServletRequest request;
     @Mock
-    HttpServletResponse response;
+    private HttpServletResponse response;
     @Mock
-    RequestDispatcher requestDispatcher;
+    private RequestDispatcher requestDispatcher;
     @Mock
-    ServletContext context;
+    private ServletContext context;
     @Spy
     @InjectMocks
-    DeleteEmployeeServlet servlet;
+    private DeleteEmployeeServlet servlet;
 
     @Before
     public void setUp() {

@@ -14,11 +14,14 @@ import java.io.PrintWriter;
 
 @WebServlet("/employee/create")
 public class CreateEmployeeServlet extends HttpServlet {
+    static final String CREATE_EMPLOYEE_PAGE = "/employee/create.jsp";
+    static final String ERROR_PAGE = "/employee/error.jsp";
+
     CRUDService service = new CRUDService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/employee/create.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher(CREATE_EMPLOYEE_PAGE).forward(req, resp);
     }
 
     @Override
@@ -41,7 +44,7 @@ public class CreateEmployeeServlet extends HttpServlet {
                 }
             }
         } catch (Exception e) {
-            getServletContext().getRequestDispatcher("/employee/error.jsp").forward(req, resp);
+            getServletContext().getRequestDispatcher(ERROR_PAGE).forward(req, resp);
         }
     }
 }

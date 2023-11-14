@@ -21,14 +21,16 @@ public class EditEmployeeServlet extends HttpServlet {
 
     // TODO: what if employee not found?
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             int id = Integer.parseInt(req.getParameter("id"));
             Employee employee = service.findEmployeeById(id);
             req.setAttribute("employee", employee);
-            getServletContext().getRequestDispatcher(EDIT_EMPLOYEE_PAGE).forward(req, resp);
-        } catch (Throwable t) {
-            throw new ServletException("Error: " + t.getMessage(), t);
+            if (employee != null) {
+                getServletContext().getRequestDispatcher(EDIT_EMPLOYEE_PAGE).forward(req, resp);
+            } else throw new Exception("Employee " + id + " is not found.");
+        } catch (Exception e) {
+            getServletContext().getRequestDispatcher(ERROR_PAGE).forward(req, resp);
         }
     }
 

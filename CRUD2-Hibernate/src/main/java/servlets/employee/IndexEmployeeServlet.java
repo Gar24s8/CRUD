@@ -13,6 +13,8 @@ import java.util.List;
 
 @WebServlet("/employee/index")
 public class IndexEmployeeServlet extends HttpServlet {
+    static final String INDEX_PAGE = "/index.jsp";
+
     CRUDService service = new CRUDService();
 
     @Override
@@ -21,6 +23,6 @@ public class IndexEmployeeServlet extends HttpServlet {
         List<Employee> employees = service.findAllEmployees();
         req.setAttribute("employees", employees);
 
-        getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher(INDEX_PAGE).forward(req, resp);
     }
 }
