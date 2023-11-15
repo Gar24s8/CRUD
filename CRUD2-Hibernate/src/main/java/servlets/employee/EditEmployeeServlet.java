@@ -45,7 +45,7 @@ public class EditEmployeeServlet extends HttpServlet {
             long salary = Long.parseLong(req.getParameter("salary"));
             Employee employee = new Employee(id, name, position, salary);
 
-            if (StringUtils.isEmpty(name) | StringUtils.isEmpty(position)) {
+            if (StringUtils.isEmpty(name) || StringUtils.isEmpty(position)) {
                 resp.getWriter().print("All fields must be filled in");
             } else {
                 boolean isRowEdited = service.updateEmployee(employee);

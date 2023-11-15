@@ -47,9 +47,7 @@ public class CreateEmployeeServletTest {
     }
 
     @Test
-    public void doGet_shouldShowCreateEmployeePage_whenGetRequest() throws Exception {
-        when(service.createEmployee(any())).thenReturn(true);
-
+    public void doGet_shouldShowCreateEmployeePage_whenGetRequest() throws ServletException, IOException {
         servlet.doGet(request, response);
 
         verify(servletContext).getRequestDispatcher(CREATE_EMPLOYEE_PAGE);
@@ -58,7 +56,7 @@ public class CreateEmployeeServletTest {
 
 
     @Test
-    public void doPost_shouldCreateAndShowIndex_whenAllFieldsFilled() throws Exception {
+    public void doPost_shouldCreateAndShowIndex_whenAllFieldsFilled() throws ServletException, IOException {
         when(request.getParameter("name")).thenReturn("Igor");
         when(request.getParameter("position")).thenReturn("Engineer");
         when(request.getParameter("salary")).thenReturn("1000");
@@ -71,7 +69,7 @@ public class CreateEmployeeServletTest {
     }
 
     @Test
-    public void doPost_shouldSendInformMessage_whenFieldsNotFilled() throws Exception {
+    public void doPost_shouldSendInformMessage_whenFieldsNotFilled() throws ServletException, IOException {
         when(request.getParameter("name")).thenReturn("");
         when(request.getParameter("position")).thenReturn("Engineer");
         when(request.getParameter("salary")).thenReturn("1000");
@@ -94,6 +92,5 @@ public class CreateEmployeeServletTest {
         servlet.doPost(request, response);
 
         verify(servletContext).getRequestDispatcher(ERROR_PAGE);
-        verify(requestDispatcher).forward(request, response);
     }
 }

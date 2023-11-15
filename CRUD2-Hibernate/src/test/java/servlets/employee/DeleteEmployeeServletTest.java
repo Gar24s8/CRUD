@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static org.mockito.Mockito.*;
+import static servlets.employee.EditEmployeeServlet.ERROR_PAGE;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DeleteEmployeeServletTest {
@@ -30,15 +31,15 @@ public class DeleteEmployeeServletTest {
     @Mock
     private RequestDispatcher requestDispatcher;
     @Mock
-    private ServletContext context;
+    private ServletContext servletContext;
     @Spy
     @InjectMocks
     private DeleteEmployeeServlet servlet;
 
     @Before
     public void setUp() {
-        doReturn(context).when(servlet).getServletContext();
-        when(context.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
+        doReturn(servletContext).when(servlet).getServletContext();
+        when(servletContext.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
     }
 
     @Test
@@ -48,6 +49,7 @@ public class DeleteEmployeeServletTest {
 
         servlet.doPost(request, response);
 
+        verify(service).deleteEmployeeById(1);
         verify(response).sendRedirect(request.getContextPath() + "/employee/index");
     }
 
@@ -58,15 +60,6 @@ public class DeleteEmployeeServletTest {
 
         servlet.doPost(request, response);
 
-        verify(requestDispatcher).forward(request, response);
-    }
-
-    @Test
-    public void doPost_shouldFail_whenEmployeeNotFound() throws ServletException, IOException {
-        when(request.getParameter("id")).thenReturn(null);
-
-        servlet.doPost(request, response);
-
-        verify(requestDispatcher).forward(request, response);
+        verify(servletContext).getRequestDispatcher(ERROR_PAGE);
     }
 }

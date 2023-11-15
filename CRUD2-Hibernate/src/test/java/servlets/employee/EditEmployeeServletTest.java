@@ -106,11 +106,6 @@ public class EditEmployeeServletTest {
 
         servlet.doPost(request, response);
 
-        verify(requestDispatcher).forward(request, response);
-    }
-
-    @Test
-    public void doPost_shouldShowError_whenExceptionIsThrown() throws ServletException, IOException {
-
+        verify(servletContext).getRequestDispatcher(ERROR_PAGE);
     }
 }

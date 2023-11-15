@@ -52,23 +52,18 @@ public class IndexEmployeeServletTest {
     }
 
     @Test
-    public void doGet_shouldPassed_whenRedirect() throws ServletException, IOException {
+    public void doGet_shouldRedirectToIndex_whenCalled() throws ServletException, IOException {
         servlet.doGet(request, response);
 
         verify(dispatcher).forward(request, response);
     }
 
-    @Test
-    public void doGet_shouldPassed_whenAttributeSet() throws ServletException, IOException {
-        servlet.doGet(request, response);
-
-        verify(request).setAttribute("employees", employees);
-    }
 
     @Test
     public void doGet_shouldPassed_whenEmployeesFound() throws ServletException, IOException {
         servlet.doGet(request, response);
 
+        verify(request).setAttribute("employees", employees);
         verify(service).findAllEmployees();
     }
 }
