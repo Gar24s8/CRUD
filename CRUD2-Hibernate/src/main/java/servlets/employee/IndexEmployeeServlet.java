@@ -14,6 +14,7 @@ import java.util.List;
 @WebServlet("/employee/index")
 public class IndexEmployeeServlet extends HttpServlet {
     static final String INDEX_PAGE = "/index.jsp";
+    public static final String ERROR_PAGE = "/employee/error.jsp";
 
     CRUDService service = new CRUDService();
 

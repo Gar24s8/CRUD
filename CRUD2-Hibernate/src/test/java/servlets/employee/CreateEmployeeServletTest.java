@@ -21,7 +21,7 @@ import java.io.StringWriter;
 
 import static org.mockito.Mockito.*;
 import static servlets.employee.CreateEmployeeServlet.CREATE_EMPLOYEE_PAGE;
-import static servlets.employee.CreateEmployeeServlet.ERROR_PAGE;
+import static servlets.employee.IndexEmployeeServlet.ERROR_PAGE;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CreateEmployeeServletTest {
@@ -86,8 +86,11 @@ public class CreateEmployeeServletTest {
     }
 
     @Test
-    public void doPost_shouldShowError_whenNotUpdated() throws ServletException, IOException {
-        when(service.createEmployee(any())).thenReturn(false);
+    public void doPost_shouldShowError_whenNotCreated() throws ServletException, IOException {
+        when(request.getParameter("name")).thenReturn("Igor");
+        when(request.getParameter("position")).thenReturn("Engineer");
+        when(request.getParameter("salary")).thenReturn("1000");
+        when(service.createEmployee(any(Employee.class))).thenReturn(false);
 
         servlet.doPost(request, response);
 

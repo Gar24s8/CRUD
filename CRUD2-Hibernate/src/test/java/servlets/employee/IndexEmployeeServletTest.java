@@ -60,10 +60,10 @@ public class IndexEmployeeServletTest {
 
 
     @Test
-    public void doGet_shouldPassed_whenEmployeesFound() throws ServletException, IOException {
+    public void doGet_shouldReturnListOfEmployees_whenFound() throws ServletException, IOException {
         servlet.doGet(request, response);
 
-        verify(request).setAttribute("employees", employees);
         verify(service).findAllEmployees();
+        verify(request).setAttribute("employees", employees);
     }
 }

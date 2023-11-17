@@ -9,9 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static servlets.employee.IndexEmployeeServlet.ERROR_PAGE;
+
 @WebServlet("/employee/delete")
 public class DeleteEmployeeServlet extends HttpServlet {
-    static final String ERROR_PAGE = "/employee/error.jsp";
 
     CRUDService service = new CRUDService();
 

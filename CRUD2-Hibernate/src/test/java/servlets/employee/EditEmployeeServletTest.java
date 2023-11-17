@@ -21,7 +21,7 @@ import java.io.StringWriter;
 
 import static org.mockito.Mockito.*;
 import static servlets.employee.EditEmployeeServlet.EDIT_EMPLOYEE_PAGE;
-import static servlets.employee.EditEmployeeServlet.ERROR_PAGE;
+import static servlets.employee.IndexEmployeeServlet.ERROR_PAGE;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EditEmployeeServletTest {
@@ -102,7 +102,11 @@ public class EditEmployeeServletTest {
 
     @Test
     public void doPost_shouldShowError_whenNotUpdated() throws ServletException, IOException {
-        when(service.updateEmployee(any())).thenReturn(false);
+        when(request.getParameter("id")).thenReturn("1");
+        when(request.getParameter("name")).thenReturn("Igor");
+        when(request.getParameter("position")).thenReturn("Engineer");
+        when(request.getParameter("salary")).thenReturn("1000");
+        when(service.updateEmployee(any(Employee.class))).thenReturn(false);
 
         servlet.doPost(request, response);
 

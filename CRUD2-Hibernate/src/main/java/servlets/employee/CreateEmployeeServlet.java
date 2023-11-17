@@ -10,12 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
+
+import static servlets.employee.IndexEmployeeServlet.ERROR_PAGE;
 
 @WebServlet("/employee/create")
 public class CreateEmployeeServlet extends HttpServlet {
     static final String CREATE_EMPLOYEE_PAGE = "/employee/create.jsp";
-    static final String ERROR_PAGE = "/employee/error.jsp";
 
     CRUDService service = new CRUDService();
 
@@ -33,7 +33,7 @@ public class CreateEmployeeServlet extends HttpServlet {
             String position = req.getParameter("position");
             long salary = Long.parseLong(req.getParameter("salary"));
             if (StringUtils.isEmpty(name) || StringUtils.isEmpty(position)) {
-                PrintWriter pw = resp.getWriter().printf("All fields must be filled in");
+                resp.getWriter().print("All fields must be filled in");
             } else {
                 Employee employee = new Employee(name, position, salary);
                 boolean isRowCreated = service.createEmployee(employee);

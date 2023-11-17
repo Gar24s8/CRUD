@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static org.mockito.Mockito.*;
-import static servlets.employee.EditEmployeeServlet.ERROR_PAGE;
+import static servlets.employee.IndexEmployeeServlet.ERROR_PAGE;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DeleteEmployeeServletTest {
@@ -60,6 +60,8 @@ public class DeleteEmployeeServletTest {
 
         servlet.doPost(request, response);
 
+        verify(request, times(1)).getParameter("id");
+        verify(service, times(1)).deleteEmployeeById(1);
         verify(servletContext).getRequestDispatcher(ERROR_PAGE);
     }
 }

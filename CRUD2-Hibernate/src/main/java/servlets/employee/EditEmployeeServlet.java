@@ -11,11 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static servlets.employee.IndexEmployeeServlet.ERROR_PAGE;
+
 @WebServlet("/employee/edit")
 public class EditEmployeeServlet extends HttpServlet {
 
     static final String EDIT_EMPLOYEE_PAGE = "/employee/edit.jsp";
-    static final String ERROR_PAGE = "/employee/error.jsp";
 
     CRUDService service = new CRUDService();
 
