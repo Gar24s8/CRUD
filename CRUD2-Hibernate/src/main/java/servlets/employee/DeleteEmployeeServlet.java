@@ -1,7 +1,5 @@
 package servlets.employee;
 
-import models.Employee;
-import org.apache.commons.lang3.StringUtils;
 import services.CRUDService;
 
 import javax.servlet.ServletException;
@@ -10,12 +8,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import static servlets.employee.IndexEmployeeServlet.ERROR_PAGE;
 
 @WebServlet("/employee/delete")
 public class DeleteEmployeeServlet extends HttpServlet {
+
     CRUDService service = new CRUDService();
 
     @Override
@@ -30,7 +28,7 @@ public class DeleteEmployeeServlet extends HttpServlet {
                 throw new Exception("Employee " + id + " is already deleted.");
             }
         } catch (Exception e) {
-            getServletContext().getRequestDispatcher("/employee/error.jsp").forward(req, resp);
+            getServletContext().getRequestDispatcher(ERROR_PAGE).forward(req, resp);
         }
     }
 }

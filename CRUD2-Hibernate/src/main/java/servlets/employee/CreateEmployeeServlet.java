@@ -10,15 +10,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
+
+import static servlets.employee.IndexEmployeeServlet.ERROR_PAGE;
 
 @WebServlet("/employee/create")
 public class CreateEmployeeServlet extends HttpServlet {
+    static final String CREATE_EMPLOYEE_PAGE = "/employee/create.jsp";
+
     CRUDService service = new CRUDService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/employee/create.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher(CREATE_EMPLOYEE_PAGE).forward(req, resp);
     }
 
     @Override
@@ -29,8 +32,8 @@ public class CreateEmployeeServlet extends HttpServlet {
             String name = req.getParameter("name");
             String position = req.getParameter("position");
             long salary = Long.parseLong(req.getParameter("salary"));
-            if (StringUtils.isEmpty(name) | StringUtils.isEmpty(position)) {
-                PrintWriter pw = resp.getWriter().printf("All fields must be filled in");
+            if (StringUtils.isEmpty(name) || StringUtils.isEmpty(position)) {
+                resp.getWriter().print("All fields must be filled in");
             } else {
                 Employee employee = new Employee(name, position, salary);
                 boolean isRowCreated = service.createEmployee(employee);
@@ -41,7 +44,7 @@ public class CreateEmployeeServlet extends HttpServlet {
                 }
             }
         } catch (Exception e) {
-            getServletContext().getRequestDispatcher("/employee/error.jsp").forward(req, resp);
+            getServletContext().getRequestDispatcher(ERROR_PAGE).forward(req, resp);
         }
     }
 }
