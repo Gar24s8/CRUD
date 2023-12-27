@@ -1,5 +1,6 @@
-package dao;
+package services;
 
+import dao.TaskDAO;
 import models.Task;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -12,9 +13,9 @@ import java.util.logging.Logger;
 
 import static java.lang.String.format;
 
-public class TaskDAOImpl implements TaskDAO {
+public class TaskService implements TaskDAO {
 
-    private static final Logger LOG = Logger.getLogger(TaskDAOImpl.class.getName());
+    private static final Logger LOG = Logger.getLogger(TaskService.class.getName());
 
     @Override
     public List<Task> getAll() {
@@ -34,10 +35,9 @@ public class TaskDAOImpl implements TaskDAO {
         LOG.info(() -> format("Trying to get task %s", id));
         Optional<Task> task = Optional.empty();
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
-            task = Optional.of(session.load(Task.class, id));
-            //task = session.load(Task.class, id);
+            task = Optional.of(session.find(Task.class, id));
             System.out.println(task);
-            LOG.info(() -> format("Task %s successfully got!", id));
+            LOG.info(() -> format("Employee %s successfully got!", id));
         } catch (Exception e) {
             LOG.log(Level.SEVERE, e, e::getMessage);
         }
@@ -50,7 +50,7 @@ public class TaskDAOImpl implements TaskDAO {
         Transaction tx1 = null;
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             tx1 = session.beginTransaction();
-            session.save(task);
+            session.persist(task);
             tx1.commit();
             LOG.info(() -> format("Task %s successfully inserted!", task));
         } catch (Exception e) {
@@ -80,6 +80,24 @@ public class TaskDAOImpl implements TaskDAO {
 
     @Override
     public boolean delete(int id) {
-        return false;
+        LOG.info(() -> format("Trying to delete task %s", id));
+        Transaction tx1 = null;
+        Task task;
+        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            tx1 = session.beginTransaction();
+            task = session.get(Task.class, id);
+            if (task != null) {
+                session.delete(task);
+                tx1.commit();
+                LOG.info(() -> format("Task %s successfully deleted!", task));
+            } else {
+                LOG.warning(() -> format("Failed to delete task %s", id));
+            }
+        } catch (Exception e) {
+            if (tx1 != null) tx1.rollback();
+            LOG.log(Level.SEVERE, e, e::getMessage);
+            return false;
+        }
+        return true;
     }
 }

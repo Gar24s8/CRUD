@@ -6,6 +6,6 @@
          version="4.0">
     <error-page>
         <exception-type>java.lang.Throwable</exception-type>
-        <location>/employee/error.jsp</location>
+        <location>/error.jsp</location>
     </error-page>
 </web-app>

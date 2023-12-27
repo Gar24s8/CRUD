@@ -19,6 +19,10 @@
     <input name="position" required placeholder="Input position"/><br><br>
     <label>Salary</label><br>
     <input name="salary" type="number" required placeholder="Input salary"/><br><br>
+    <label>Office</label><br>
+    <input name="officeName" required placeholder="Input name"/><br><br>
+    <label>Address</label><br>
+    <input name="address" required placeholder="Input name"/><br><br>
     <input type="submit" value="Save"/>
 </form>
 </body>

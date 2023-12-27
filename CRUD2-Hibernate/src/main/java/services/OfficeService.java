@@ -1,5 +1,6 @@
-package dao;
+package services;
 
+import dao.OfficeDAO;
 import models.Office;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -12,10 +13,9 @@ import java.util.logging.Logger;
 
 import static java.lang.String.format;
 
-public class OfficeDAOImpl implements OfficeDAO {
+public class OfficeService implements OfficeDAO {
 
-    private static final Logger LOG = Logger.getLogger(OfficeDAOImpl.class.getName());
-
+    private static final Logger LOG = Logger.getLogger(OfficeService.class.getName());
 
     @Override
     public List<Office> getAll() {
@@ -35,7 +35,7 @@ public class OfficeDAOImpl implements OfficeDAO {
         LOG.info(() -> format("Trying to get office %s", id));
         Optional<Office> office = Optional.empty();
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
-            office = Optional.of(session.load(Office.class, id));
+            office = Optional.of(session.find(Office.class, id));
             System.out.println(office);
             LOG.info(() -> format("Office %s successfully got!", id));
         } catch (Exception e) {
@@ -44,13 +44,14 @@ public class OfficeDAOImpl implements OfficeDAO {
         return office;
     }
 
+
     @Override
     public boolean insert(Office office) {
         LOG.info(() -> format("Trying to insert office %s", office));
         Transaction tx1 = null;
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             tx1 = session.beginTransaction();
-            session.save(office);
+            session.persist(office);
             tx1.commit();
             LOG.info(() -> format("Office %s successfully inserted!", office));
         } catch (Exception e) {
