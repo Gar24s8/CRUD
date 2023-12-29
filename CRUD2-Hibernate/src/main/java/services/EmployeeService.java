@@ -24,11 +24,11 @@ public class EmployeeService implements EmployeeDAO {
 
     @Override
     public List<Employee> getAll() {
-        LOG.info(() -> "Trying to get all offices");
+        LOG.info(() -> "Trying to get all employees");
         List<Employee> employees = null;
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             employees = (List<Employee>) session.createQuery("FROM Employee ").list();
-            LOG.info(() -> "All offices successfully got!");
+            LOG.info(() -> "All employees successfully got!");
         } catch (Exception e) {
             LOG.log(Level.SEVERE, e, e::getMessage);
         }
@@ -58,7 +58,7 @@ public class EmployeeService implements EmployeeDAO {
         Transaction tx1 = null;
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             tx1 = session.beginTransaction();
-            session.persist(employee);
+            session.save(employee);
             tx1.commit();
             LOG.info(() -> format("Employee %s successfully inserted!", employee));
         } catch (Exception e) {
@@ -88,7 +88,7 @@ public class EmployeeService implements EmployeeDAO {
 
     @Override
     public boolean delete(int id) {
-        LOG.info(() -> format("Trying to delete office %s", id));
+        LOG.info(() -> format("Trying to delete employee %s", id));
         Transaction tx1 = null;
         Employee employee;
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {

@@ -1,4 +1,5 @@
-<%--
+<%@ page import="models.Office" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: gar24
   Date: 15.10.2023
@@ -20,9 +21,9 @@
     <label>Salary</label><br>
     <input name="salary" type="number" required placeholder="Input salary"/><br><br>
     <label>Office</label><br>
-    <input name="officeName" required placeholder="Input name"/><br><br>
+    <input name="officeName" /><br><br>
     <label>Address</label><br>
-    <input name="address" required placeholder="Input name"/><br><br>
+    <input name="address" /><br><br>
     <input type="submit" value="Save"/>
 </form>
 </body>

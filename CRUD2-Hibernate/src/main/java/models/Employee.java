@@ -22,7 +22,7 @@ public class Employee {
     private int salary;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "office_id", nullable = false)
+    @JoinColumn(name = "office_id")
     private Office office;
 
     @ManyToMany(cascade = CascadeType.ALL)

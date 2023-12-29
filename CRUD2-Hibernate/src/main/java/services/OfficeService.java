@@ -4,6 +4,7 @@ import dao.OfficeDAO;
 import models.Office;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import utils.HibernateSessionFactoryUtil;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.logging.Logger;
 import static java.lang.String.format;
 
 public class OfficeService implements OfficeDAO {
-
+    private static final long serialVersionUID = 1L;
     private static final Logger LOG = Logger.getLogger(OfficeService.class.getName());
 
     @Override
@@ -36,7 +37,7 @@ public class OfficeService implements OfficeDAO {
         Optional<Office> office = Optional.empty();
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             office = Optional.of(session.find(Office.class, id));
-            System.out.println(office);
+        //    System.out.println(office);
             LOG.info(() -> format("Office %s successfully got!", id));
         } catch (Exception e) {
             LOG.log(Level.SEVERE, e, e::getMessage);
@@ -51,7 +52,7 @@ public class OfficeService implements OfficeDAO {
         Transaction tx1 = null;
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             tx1 = session.beginTransaction();
-            session.persist(office);
+            session.save(office);
             tx1.commit();
             LOG.info(() -> format("Office %s successfully inserted!", office));
         } catch (Exception e) {
@@ -100,5 +101,17 @@ public class OfficeService implements OfficeDAO {
             return false;
         }
         return true;
+    }
+
+    public Optional<Office> getOfficeByName(String officeName) {
+        LOG.info(() -> format("Trying to get office %s", officeName));
+        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            Query<Office> query = session.createQuery("FROM Office WHERE officeName = :officeName", Office.class);
+            query.setParameter("officeName", officeName);
+            return query.uniqueResultOptional();
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, e, e::getMessage);
+            return Optional.empty();
+        }
     }
 }

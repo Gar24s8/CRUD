@@ -50,7 +50,7 @@ public class TaskService implements TaskDAO {
         Transaction tx1 = null;
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
             tx1 = session.beginTransaction();
-            session.persist(task);
+            session.save(task);
             tx1.commit();
             LOG.info(() -> format("Task %s successfully inserted!", task));
         } catch (Exception e) {
