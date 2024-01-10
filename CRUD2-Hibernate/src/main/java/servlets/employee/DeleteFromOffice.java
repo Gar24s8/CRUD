@@ -43,9 +43,9 @@ public class DeleteFromOffice extends HttpServlet {
 
                 employee.setOffice(null);
                 employeeService.update(employee);
-            //    office.removeEmployee(employee);
-            //    officeService.update(office);
-                resp.sendRedirect(req.getContextPath() + "/office/ListOffices");
+                //    office.removeEmployee(employee);
+                //    officeService.update(office);
+                resp.sendRedirect(req.getContextPath() + "/employee/listEmployees?officeID=" + officeId);
                 LOG.info(() -> format("Employee %s successfully removed from office %s", employeeId, officeId));
             } else {
                 LOG.warning(() -> format("Employee %s or Office %s not found", employeeId, officeId));

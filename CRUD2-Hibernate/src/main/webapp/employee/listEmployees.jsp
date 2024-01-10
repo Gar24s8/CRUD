@@ -23,7 +23,7 @@
             <td>${employees.position}</td>
             <td>${employees.salary}</td>
             <td>
-                <form method="post" action='<c:url value="/employee/listEmployees?officeID=${office.id}" />'
+                <form method="post" action='<c:url value="/employee/edit?id=${employees.id}" />'
                       style="display:inline;">
                     <input type="hidden" name="id" value="${employees.id}">
                     <input type="submit" value="Edit"> |
