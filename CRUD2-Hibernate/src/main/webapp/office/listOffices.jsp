@@ -38,9 +38,9 @@
             <td>${employees.position}</td>
             <td>${employees.salary}</td>
             <td>
-                <form method="post" action='<c:url value="/employee/edit?id=${employees.id}" />'
+                <form method="get" action='<c:url value="/employee/edit?id=${employees.id}" />'
                       style="display:inline;">
-<%--                    <input type="hidden" name="id" value="${employees.id}">--%>
+                    <input type="hidden" name="id" value="${employees.id}">
                     <input type="submit" value="Edit"> |
                 </form>
                 <form method="post" action='<c:url value="/employee/delete" />' style="display:inline;">

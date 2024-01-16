@@ -24,11 +24,12 @@ public class EmployeeInOfficeServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        LOG.info("Trying to get all employees from selected office");
 
         int officeID = Integer.parseInt(req.getParameter("officeID"));
         List<Employee> employees = employeeService.getEmployeeByOfficeId(officeID)
                 .stream().sorted(Comparator.comparing(Employee::getPosition, String.CASE_INSENSITIVE_ORDER)
-                .thenComparing(Employee::getName, String.CASE_INSENSITIVE_ORDER))
+                        .thenComparing(Employee::getName, String.CASE_INSENSITIVE_ORDER))
                 .collect(Collectors.toList());
 
         req.setAttribute("employees", employees);
