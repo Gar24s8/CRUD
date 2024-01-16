@@ -33,7 +33,8 @@ public class EmployeeInOfficeServlet extends HttpServlet {
                 .collect(Collectors.toList());
 
         req.setAttribute("employees", employees);
-        req.getRequestDispatcher("/employee/listEmployees.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/employee/listEmployees.jsp").forward(req, resp);
+       // req.getRequestDispatcher("/employee/listEmployees.jsp").forward(req, resp);
 
     }
 }
