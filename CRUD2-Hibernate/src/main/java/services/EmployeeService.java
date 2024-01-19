@@ -11,12 +11,10 @@ import utils.HibernateSessionFactoryUtil;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 
@@ -142,13 +140,13 @@ public class EmployeeService implements EmployeeDAO {
     }
 
     public List<Employee> findEmployeeByName(String name) {
-        LOG.info(() -> "Trying to find employees contains name " + name);
+        LOG.info(() -> "Trying to find employees contains in name " + name);
         List<Employee> employees = null;
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
-            Query query = session.createQuery("FROM Employee WHERE name LIKE :name");
-            query.setParameter("name", "%"+name+"%");
+            Query query = session.createQuery("FROM Employee WHERE lower(name) LIKE lower(:name)");
+            query.setParameter("name", "%" + name.toLowerCase() + "%");
             employees = query.list();
-            LOG.info(() -> "Employees with name " + name + " successfully got!");
+            LOG.info(() -> "Employees contains in name " + name + " successfully got!");
         } catch (Exception e) {
             LOG.log(Level.SEVERE, e, e::getMessage);
         }
