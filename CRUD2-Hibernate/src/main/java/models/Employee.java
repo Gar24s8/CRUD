@@ -1,8 +1,8 @@
 package models;
 
+
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "employee")
@@ -19,21 +19,22 @@ public class Employee {
     private String position;
 
     @Column(name = "salary")
-    private long salary;
+    private int salary;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "office_id")
     private Office office;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "employee_tasks", joinColumns = @JoinColumn(name = "employee_id"),
-            inverseJoinColumns = @JoinColumn(name = "tasks_id"))
+    @JoinTable(name = "employee_task", joinColumns = @JoinColumn(name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "task_id"))
     private List<Task> tasks;
+
 
     public Employee() {
     }
 
-    public Employee(int id, String name, String position, long salary) {
+    public Employee(int id, String name, String position, int salary) {
         this.id = id;
         this.name = name;
         this.position = position;
@@ -41,7 +42,7 @@ public class Employee {
     }
 
 
-    public Employee(String name, String position, long salary) {
+    public Employee(String name, String position, int salary) {
         this.name = name;
         this.position = position;
         this.salary = salary;
@@ -84,7 +85,7 @@ public class Employee {
         return salary;
     }
 
-    public void setSalary(long salary) {
+    public void setSalary(int salary) {
         this.salary = salary;
     }
 
@@ -103,6 +104,7 @@ public class Employee {
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
     }
+
 
     @Override
     public String toString() {

@@ -8,7 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
-import services.CRUDService;
+import services.EmployeeService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -21,51 +21,51 @@ import java.io.StringWriter;
 
 import static org.mockito.Mockito.*;
 import static servlets.employee.CreateEmployeeServlet.CREATE_EMPLOYEE_PAGE;
-import static servlets.employee.IndexEmployeeServlet.ERROR_PAGE;
+import static servlets.office.OfficeServlet.ERROR_PAGE;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CreateEmployeeServletTest {
 
     @Mock
-    private CRUDService service;
+    private EmployeeService employeeService;
     @Mock
     private HttpServletRequest request;
     @Mock
     private HttpServletResponse response;
     @Mock
-    private RequestDispatcher requestDispatcher;
+    private RequestDispatcher dispatcher;
     @Mock
-    private ServletContext servletContext;
+    private ServletContext context;
     @Spy
     @InjectMocks
     private CreateEmployeeServlet servlet;
 
     @Before
     public void setUp() {
-        doReturn(servletContext).when(servlet).getServletContext();
-        when(servletContext.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
+        doReturn(context).when(servlet).getServletContext();
+        when(context.getRequestDispatcher(anyString())).thenReturn(dispatcher);
     }
 
     @Test
     public void doGet_shouldShowCreateEmployeePage_whenGetRequest() throws ServletException, IOException {
         servlet.doGet(request, response);
 
-        verify(servletContext).getRequestDispatcher(CREATE_EMPLOYEE_PAGE);
-        verify(requestDispatcher).forward(request, response);
+        verify(context).getRequestDispatcher(CREATE_EMPLOYEE_PAGE);
+        verify(dispatcher).forward(request, response);
     }
 
-
     @Test
-    public void doPost_shouldCreateAndShowIndex_whenAllFieldsFilled() throws ServletException, IOException {
+    public void doPost_shouldCreateAndShowMainPage_whenAllFieldsFilled() throws ServletException, IOException {
         when(request.getParameter("name")).thenReturn("Igor");
         when(request.getParameter("position")).thenReturn("Engineer");
         when(request.getParameter("salary")).thenReturn("1000");
-        when(service.createEmployee(any(Employee.class))).thenReturn(true);
+        when(request.getParameter("officeName")).thenReturn("office1");
+        when(employeeService.insert(any(Employee.class))).thenReturn(true);
 
         servlet.doPost(request, response);
 
-        verify(service).createEmployee(any(Employee.class));
-        verify(response).sendRedirect(request.getContextPath() + "/employee/index");
+        verify(employeeService).insert(any(Employee.class));
+        verify(response).sendRedirect(request.getContextPath() + "/office/ListOffices");
     }
 
     @Test
@@ -82,7 +82,7 @@ public class CreateEmployeeServletTest {
 
         writer.flush();
         assert (stringWriter.toString().contains("All fields must be filled in"));
-        verifyNoInteractions(requestDispatcher);
+        verifyNoInteractions(dispatcher);
     }
 
     @Test
@@ -90,10 +90,10 @@ public class CreateEmployeeServletTest {
         when(request.getParameter("name")).thenReturn("Igor");
         when(request.getParameter("position")).thenReturn("Engineer");
         when(request.getParameter("salary")).thenReturn("1000");
-        when(service.createEmployee(any(Employee.class))).thenReturn(false);
+        when(employeeService.insert(any(Employee.class))).thenReturn(false);
 
         servlet.doPost(request, response);
 
-        verify(servletContext).getRequestDispatcher(ERROR_PAGE);
+        verify(context).getRequestDispatcher(ERROR_PAGE);
     }
 }

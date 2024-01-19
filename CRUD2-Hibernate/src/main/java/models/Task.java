@@ -1,11 +1,10 @@
 package models;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Entity
-@Table(name = "tasks")
+@Table(name = "task")
 public class Task {
 
     @Id
@@ -19,7 +18,7 @@ public class Task {
     private String deadline;
 
     @ManyToMany
-    @JoinTable(name = "employee_tasks", joinColumns = @JoinColumn(name = "tasks_id"),
+    @JoinTable(name = "employee_task", joinColumns = @JoinColumn(name = "task_id"),
             inverseJoinColumns = @JoinColumn(name = "employee_id"))
     private List<Employee> employees;
 
@@ -67,6 +66,7 @@ public class Task {
     public void setDeadline(String deadline) {
         this.deadline = deadline;
     }
+
 
     @Override
     public String toString() {

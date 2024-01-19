@@ -1,8 +1,7 @@
 package models;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "office")
@@ -17,6 +16,7 @@ public class Office {
 
     @Column(name = "address")
     private String address;
+
 
     @OneToMany(mappedBy = "office", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Employee> employees;
@@ -66,6 +66,7 @@ public class Office {
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
     }
+
 
     @Override
     public String toString() {

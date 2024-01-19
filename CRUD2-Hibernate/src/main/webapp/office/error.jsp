@@ -22,7 +22,7 @@
 <p>Type: <%= exception%></p>
 <p>Message: <%= message %></p>
 
-<form action='<c:url value="/employee/index" />' style="display:inline;">
+<form action='<c:url value="/office/ListOffices" />' style="display:inline;">
     <input type="submit" value="Back">
 </form>
 </body>

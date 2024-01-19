@@ -8,7 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
-import services.CRUDService;
+import services.EmployeeService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -19,51 +19,51 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class IndexEmployeeServletTest {
-
+public class SearchServletTest {
     @Mock
-    private CRUDService service;
+    private EmployeeService employeeService;
     @Mock
     private HttpServletRequest request;
     @Mock
     private HttpServletResponse response;
     @Mock
-    private ServletContext servletContext;
+    private ServletContext context;
     @Mock
     private RequestDispatcher dispatcher;
     @Spy
     @InjectMocks
-    private IndexEmployeeServlet servlet;
+    private SearchServlet servlet;
 
-    private List<Employee> employees;
+    private List<Employee> searchResult;
 
     @Before
     public void setUp() {
-        doReturn(servletContext).when(servlet).getServletContext();
-        when(servletContext.getRequestDispatcher(anyString())).thenReturn(dispatcher);
+        doReturn(context).when(servlet).getServletContext();
+        when(request.getParameter("name")).thenReturn("Igor");
+        when(context.getRequestDispatcher(anyString())).thenReturn(dispatcher);
 
-        employees = Arrays.asList(new Employee("Elena", "Boss", 500000),
-                new Employee("Igor", "Manager", 100000));
+        searchResult = Arrays.asList(new Employee("Elena", "Boss", 500000),
+                new Employee("Igor", "Engineer", 100000));
 
-        when(service.findAllEmployees()).thenReturn(employees);
+        when(employeeService.findEmployeeByName("Igor")).thenReturn(searchResult);
     }
 
     @Test
-    public void doGet_shouldRedirectToIndex_whenCalled() throws ServletException, IOException {
+    public void doGet_ShouldRedirectToSearchResultPage_WhenCalled() throws ServletException, IOException {
         servlet.doGet(request, response);
 
         verify(dispatcher).forward(request, response);
     }
 
-
     @Test
-    public void doGet_shouldReturnListOfEmployees_whenFound() throws ServletException, IOException {
+    public void doGet_ShouldReturnSearchResultList_WhenCalled() throws ServletException, IOException {
         servlet.doGet(request, response);
 
-        verify(service).findAllEmployees();
-        verify(request).setAttribute("employees", employees);
+        verify(employeeService).findEmployeeByName("Igor");
+        verify(request).setAttribute("searchResult", searchResult);
     }
 }

@@ -1,42 +1,16 @@
 package dao;
 
-import models.Employee;
-import models.Office;
-import models.Task;
-
 import java.util.List;
+import java.util.Optional;
 
-public interface DAO {
+public interface DAO<T> {
+    List<T> getAll();
 
-    Office findOfficeById(int id);
+    Optional<T> getById(int id);
 
-    Employee findEmployeeById(int id);
+    boolean insert(T t);
 
-    Task findTasksBytId(int id);
+    boolean update(T t);
 
-    List<Employee> findAllEmployees();
-
-    List<Office> findAllOffices();
-
-    List<Task> findAllTasks();
-
-    boolean createEmployee(Employee employee);
-
-    void createOffice(Office office);
-
-    void createTask(Task task);
-
-    boolean updateEmployee(Employee employee);
-
-    void updateOffice(Office office);
-
-    void updateTask(Task task);
-
-    void deleteEmployee(Employee employee);
-
-    void deleteOffice(Office office);
-
-    void deleteTask(Task task);
-
-    boolean deleteEmployeeById(int id);
+    boolean delete(int id);
 }
