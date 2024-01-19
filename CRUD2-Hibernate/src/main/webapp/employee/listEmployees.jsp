@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Список сотрудников оффиса</title>
+    <title>Список сотрудников офиса</title>
 </head>
 <body>
 <h2>Список сотрудников выбранного офиса</h2>

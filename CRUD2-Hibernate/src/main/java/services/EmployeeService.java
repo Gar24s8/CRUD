@@ -11,10 +11,12 @@ import utils.HibernateSessionFactoryUtil;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 
@@ -137,5 +139,19 @@ public class EmployeeService implements EmployeeDAO {
             LOG.log(Level.SEVERE, e, e::getMessage);
             return Optional.empty();
         }
+    }
+
+    public List<Employee> findEmployeeByName(String name) {
+        LOG.info(() -> "Trying to find employees contains name " + name);
+        List<Employee> employees = null;
+        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            Query query = session.createQuery("FROM Employee WHERE name LIKE :name");
+            query.setParameter("name", "%"+name+"%");
+            employees = query.list();
+            LOG.info(() -> "Employees with name " + name + " successfully got!");
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, e, e::getMessage);
+        }
+        return employees;
     }
 }

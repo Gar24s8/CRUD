@@ -24,6 +24,12 @@
 </table>
 <h2>Список всех сотрудников</h2>
 <p><a href='<c:url value="/employee/create" />'>Новый сотрудник</a></p>
+
+<form action="/employee/search" method="GET">
+    <input type="text" name="name" placeholder="Введите имя сотрудника">
+    <button type="submit">Search</button>
+</form>
+
 <table border="2">
     <tr>
         <th>Имя</th>

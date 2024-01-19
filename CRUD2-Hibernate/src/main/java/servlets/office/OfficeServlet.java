@@ -28,10 +28,12 @@ public class OfficeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LOG.info("App started");
+
         List<Office> offices = officeService.getAll();
         List<Employee> employees = employeeService.getAll().stream()
                 .sorted(Comparator.comparing(Employee::getName, String.CASE_INSENSITIVE_ORDER))
                 .collect(Collectors.toList());
+
         req.setAttribute("offices", offices);
         req.setAttribute("employees", employees);
         LOG.info("Redirecting to start page");
